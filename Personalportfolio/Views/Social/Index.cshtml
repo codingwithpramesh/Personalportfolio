@@ -1,0 +1,39 @@
+﻿@model List<SocialMedia>
+
+@{
+    ViewData["Title"] = "List Of Data";
+}
+<div class="container">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</div>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Id) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Icon)</td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Link) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().UId) </td>
+
+                <td>Actions</td>
+            </tr>
+
+            @foreach (var abc in Model)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(Model => abc.Id)</td>
+                    <td> @Html.DisplayFor(Model => abc.Icon)</td>
+                    <td> @Html.DisplayFor(Model => abc.Link)</td>
+                    <td> @Html.DisplayFor(Model => abc.UId)</td>
+
+
+                    <td> <a asp-action="Edit" asp-route-id="@abc.Id">Edit</a></td>
+                    <td> <a asp-action="Delete" asp-route-id="@abc.Id">Delete</a></td>
+                    <td><a asp-action="Details" asp-route-id="@abc.Id">Details</a></td>
+                </tr>
+            }
+
+
+        </table>
+    </div>
+</div>

@@ -6,11 +6,17 @@ namespace Personalportfolio.Models
     public class Interest
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Desription { get; set; }
 
-        [ForeignKey("UId")]
+       
         public int UId { get; set; }
+
+        [ForeignKey("UId")]
+        public User User { get; set; }
+
+
     }
 }

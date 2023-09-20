@@ -5,11 +5,15 @@ namespace Personalportfolio.Models
 {
     public class WorkFlow
     {
-        [Key] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("UId")]
+     
+
         public int UId { get; set; }
+        [ForeignKey("UId")]
+        public User User { get; set; }
     }
 }

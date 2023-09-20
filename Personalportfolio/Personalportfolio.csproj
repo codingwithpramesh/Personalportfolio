@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
@@ -16,15 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Education\" />
-    <Folder Include="Views\Interest\" />
-    <Folder Include="Views\Award\" />
-    <Folder Include="Views\Experience\" />
-    <Folder Include="Views\WorkFlow\" />
-    <Folder Include="Views\User\" />
-    <Folder Include="Views\Title\" />
-    <Folder Include="Views\Social\" />
-    <Folder Include="wwwroot\Assets\" />
+    <Folder Include="wwwroot\Assets\Icons\" />
   </ItemGroup>
 
 </Project>

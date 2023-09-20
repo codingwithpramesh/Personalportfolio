@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Personalportfolio.Models;
 
 namespace Personalportfolio.Data
@@ -29,5 +30,7 @@ namespace Personalportfolio.Data
         public DbSet<Experience> Experiences { get; set; }
 
          public DbSet<Title> Titles { get; set; }
+
+        public DbSet<Account> Accounts { get; set; }
     }
 }

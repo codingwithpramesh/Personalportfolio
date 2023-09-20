@@ -1,0 +1,47 @@
+﻿@model List<Experience>
+
+@{
+    ViewData["Title"] = "List Of Data";
+}
+<div class="container">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</div>
+
+<a asp-action="Create">Create</a>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Id) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Company)</td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Position) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().JoinDate) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().EndDate) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().Description) </td>
+                <td>@Html.DisplayNameFor(Model =>Model.First().UId) </td>
+
+                <td>Actions</td>
+            </tr>
+
+            @foreach (var abc in Model)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(Model => abc.Id)</td>
+                    <td> @Html.DisplayFor(Model => abc.Company)</td>
+                    <td> @Html.DisplayFor(Model => abc.Position)</td>
+                    <td> @Html.DisplayFor(Model => abc.JoinDate)</td>
+                    <td> @Html.DisplayFor(Model => abc.EndDate)</td>
+                    <td> @Html.DisplayFor(Model => abc.Description)</td>
+                    <td> @Html.DisplayFor(Model => abc.UId)</td>
+
+
+                    <td> <a asp-action="Edit" asp-route-id="@abc.Id">Edit</a></td>
+                    <td> <a asp-action="Delete" asp-route-id="@abc.Id">Delete</a></td>
+                    <td><a asp-action="Details" asp-route-id="@abc.Id">Details</a></td>
+                </tr>
+            }
+
+
+        </table>
+    </div>
+</div>

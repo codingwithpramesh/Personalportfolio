@@ -6,11 +6,14 @@ namespace Personalportfolio.Models
     public class Tools
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Icon { get; set; }
 
-        [ForeignKey("UId")]
+       
         public int UId { get; set; }
+        [ForeignKey("UId")]
+        public User User { get; set; }
     }
 }

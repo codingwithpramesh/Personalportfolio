@@ -1,0 +1,51 @@
+﻿@*@model User*@
+<form asp-action="Index" asp-controller="Home" >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">@*@Model.FirstName @Model.LastName*@</span>
+        <span class="d-none d-lg-block">
+            <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="" alt="kina aayena" />
+        </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+
+            @if (Model?.About !=null)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">About</a></li>
+
+            }
+            @if (Model?.Experience?.Count >0)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">Experience</a></li>
+            }
+
+            @if (Model?.Education?.Count >0)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">Education</a></li>
+            }
+            @if (Model?.Tools?.Count >0)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">Skills</a></li>
+            }
+            @if (Model?.Awards?.Count > 0)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">Interests</a></li>
+            }
+
+            @if (Model?.Awards?.Count > 0)
+            {
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="Index">Awards</a></li>
+            }
+        </ul>
+    </div>
+    </nav>
+
+
+</form>
+
+
+

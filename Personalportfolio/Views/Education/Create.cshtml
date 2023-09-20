@@ -1,0 +1,63 @@
+﻿@model Education
+
+@{
+    ViewData["Title"] = "Create Education";
+}
+
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            
+            <div class="form-group">
+                <label asp-for="School">    School</label>
+                <input asp-for="School" class="form-control" />
+                <span asp-validation-for="School"></span>
+            </div>
+
+          @*  <div class="form-group">
+                <label asp-for="Image">Image</label>
+                <input type="file" asp-for="Image" id="ImageFile" name="file" class="form-control" />
+                <span asp-validation-for="Image"></span>
+            </div>*@
+
+
+            <div class="form-group">
+                <label asp-for="major"> Major</label>
+                <input  asp-for="major" class="form-control" />
+                <span asp-validation-for="major"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="JoinDate"> JoinDate</label>
+                <input type="datetime" asp-for="JoinDate" class="form-control" />
+                <span asp-validation-for="JoinDate"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate"> EndDate</label>
+                <input type="datetime" asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate"></span>
+            </div>
+
+        
+
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <input  asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UId"> UId</label>
+                <input asp-for="UId" class="form-control" />
+                <span asp-validation-for="UId"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" asp-action="Create" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+
+</form>

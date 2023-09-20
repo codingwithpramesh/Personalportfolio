@@ -6,6 +6,7 @@ namespace Personalportfolio.Models
     public class Experience
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string Company { get; set; }
@@ -18,7 +19,10 @@ namespace Personalportfolio.Models
 
         public string Description { get; set; }
 
-        [ForeignKey("UId")]
+       
         public int UId { get; set; }
+
+        [ForeignKey("UId")]
+         public User User { get; set; }
     }
 }

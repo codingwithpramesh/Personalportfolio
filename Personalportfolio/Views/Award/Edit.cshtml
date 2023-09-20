@@ -1,0 +1,41 @@
+﻿@model Awards
+
+@{
+    ViewData["Title"] = "Edit award";
+}
+
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="form-group">
+                <label asp-for="Id">Id</label>
+                <input  asp-for="Id" class="form-control" readonly />
+                <span asp-validation-for="Id"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            @*  <div class="form-group">
+            <label asp-for="Image">Image</label>
+            <input type="file" asp-for="Image" id="ImageFile" name="file" class="form-control" />
+            <span asp-validation-for="Image"></span>
+            </div>*@
+
+
+            <div class="form-group">
+                <label asp-for="UId"> UId</label>
+                <input type="datetime" asp-for="UId" class="form-control" />
+                <span asp-validation-for="UId"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" asp-action="Edit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+
+</form>
