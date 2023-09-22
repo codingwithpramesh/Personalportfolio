@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Personalportfolio.Models;
 using System.Numerics;
 
@@ -18,18 +19,24 @@ namespace Personalportfolio.Data.Service
             _webEnvironment=webEnvironment;
 
         }
-        public async Task<User> AddAsync(User user, IFormFile file)
+        public async Task<User> AddAsync(User user, IFormFile? file)
         {
             try
             {
+               
                 string wwwRootPath = _webEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(file.FileName);
-                string extension = Path.GetExtension(file.FileName);
+                string? fileName = Path.GetFileNameWithoutExtension(file?.FileName);
+                string extension = Path.GetExtension(file?.FileName);
                 user.Profilepic = @"\Assets\" + (fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension);
                 string path = Path.Combine(wwwRootPath + "/Assets/", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                if (file != null)
                 {
-                    await file.CopyToAsync(fileStream);
+
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await file?.CopyToAsync(fileStream);
+                    }
                 }
            
                 await _context.Users.AddAsync(user);
@@ -43,6 +50,8 @@ namespace Personalportfolio.Data.Service
 
             return null;
         }
+
+
 
         public void Delete(int id)
         {
@@ -78,10 +87,36 @@ namespace Personalportfolio.Data.Service
             throw new NotImplementedException();
         }
 */
-        public async Task<User> Update(User user)
+        public async Task<User> Update(User user, IFormFile newfile)
         {
-            _context.Users.Update(user);
+            /*_context.Users.Update(user);
             _context.SaveChanges();
+            return user;*/
+
+
+            var uiserid = await _context.Users.FindAsync(user.Id);
+            if (newfile != null)
+            {
+                
+                var oldImagePath = Path.Combine(_webEnvironment.WebRootPath, user.Profilepic.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+
+               
+                string fileName = Path.GetFileNameWithoutExtension(newfile.FileName);
+                string extension = Path.GetExtension(newfile.FileName);
+                user.Profilepic = @"\Assets\" + (fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension);
+                string path = Path.Combine(_webEnvironment.WebRootPath + "/Assets/", fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await newfile.CopyToAsync(fileStream);
+                }
+            }
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
             return user;
         }
     }

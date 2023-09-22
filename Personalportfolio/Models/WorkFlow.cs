@@ -8,12 +8,14 @@ namespace Personalportfolio.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
         public string Description { get; set; }
 
      
 
         public int UId { get; set; }
         [ForeignKey("UId")]
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

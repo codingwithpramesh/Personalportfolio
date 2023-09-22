@@ -13,11 +13,11 @@ namespace Personalportfolio.Controllers
     {
         private readonly IUserService _service;
         private readonly ApplicationDbContext _context;
-        public UserController(IUserService service , ApplicationDbContext context)
+        public UserController(IUserService service, ApplicationDbContext context)
         {
             _service = service;
             _context = context;
-            
+
         }
         [HttpGet]
         public IActionResult Index()
@@ -27,7 +27,7 @@ namespace Personalportfolio.Controllers
             if (username != null)
             {
                 var userId = username;
-              
+
             }
 
             var data = _context.Users.FirstOrDefault(x => x.Email == username);
@@ -35,16 +35,14 @@ namespace Personalportfolio.Controllers
         }
 
         [HttpPost, ActionName("Index")]
-        public IActionResult Indexed( User user)
+        public IActionResult Indexed(User user, IFormFile file)
         {
-            /* var data = _service.GetAll().ToList();
-             return View(data);*/
 
-            _service.Update(user);
+            _service.Update(user, file);
             return RedirectToAction("Index");
         }
 
-
+     
         [HttpGet]
         public IActionResult Create()
         {
@@ -52,19 +50,27 @@ namespace Personalportfolio.Controllers
             return View();
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Create(User user, IFormFile file)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _service.AddAsync(user, file);
-                return RedirectToAction("Login","Account" );
+                try
+                {
 
+                    await _service.AddAsync(user, file);
+                    return RedirectToAction("Login", "Account");
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
+
             return View();
         }
 
@@ -73,13 +79,19 @@ namespace Personalportfolio.Controllers
         {
             User data = _service.GetById(id);
             return View(data);
+
+
         }
 
         [HttpPost]
-        public IActionResult Edit(User user)
+        public IActionResult Edit(User user, IFormFile file)
         {
-            _service.Update(user);
+
+
+            _service.Update(user, file);
             return RedirectToAction("Index");
+
+
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -91,8 +103,16 @@ namespace Personalportfolio.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Deleted(int id)
         {
-            _service.Delete(id);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _service.Delete(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
 
@@ -102,76 +122,76 @@ namespace Personalportfolio.Controllers
             return View(data);
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        /* [HttpGet]
+         public IActionResult Register()
+         {
+             return View();
+         }
 
-        [HttpPost, ActionName("Register")]
-        public IActionResult Registered()
-        {
-            return View();
-        }
+         [HttpPost, ActionName("Register")]
+         public IActionResult Registered()
+         {
+             return View();
+         }
+ */
 
 
+        /* [HttpGet]
+         public IActionResult Login()
+         {
+             return View();
+         }
 
-       /* [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+         [HttpPost]
+         public async Task<IActionResult> login(LoginVm loginvm)
+         {
+             if (!ModelState.IsValid)
+             {
+                 return View(loginvm);
+             }
 
-        [HttpPost]
-        public async Task<IActionResult> login(LoginVm loginvm)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(loginvm);
-            }
+             var data = await _service.Login(loginvm);
 
-            var data = await _service.Login(loginvm);
+             if (data.statuscode == 1)
+             {
+                 return RedirectToAction("Index", "Home");
+             }
+             else
+             {
+                 return RedirectToAction("Login", "Account");
+             }
 
-            if (data.statuscode == 1)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+             //  var result = await _context.LoginAsync;
 
-            //  var result = await _context.LoginAsync;
+         }
 
-        }
+         [HttpGet]
+         public IActionResult Register()
+         {
+             return View("Register");
+         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View("Register");
-        }
+         [HttpPost]
+         public async Task<IActionResult> Register(User user)
+         {
+             if (!ModelState.IsValid)
+             {
+                 return View();
+             }
+             else
+             {
 
-        [HttpPost]
-        public async Task<IActionResult> Register(User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            else
-            {
-               
-                var re = await _service.Register(register);
-                return RedirectToAction("Register", "Account");
+                 var re = await _service.Register(register);
+                 return RedirectToAction("Register", "Account");
 
-            }
-        }
+             }
+         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await _service.LogoutAsync();
-            return RedirectToAction("Login", "Account");
-        }*/
+         public async Task<IActionResult> Logout()
+         {
+             await _service.LogoutAsync();
+             return RedirectToAction("Login", "Account");
+         }*/
 
 
     }

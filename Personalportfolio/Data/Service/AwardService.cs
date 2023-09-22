@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Personalportfolio.Models;
+using System.Security.Claims;
 
 namespace Personalportfolio.Data.Service
 {
     public class AwardService : IAwardService
     {
         private readonly ApplicationDbContext _context;
-        public AwardService(ApplicationDbContext context)
+        //private readonly IHttpContextAccessor _contextAccessor;
+        public AwardService(ApplicationDbContext context/*, HttpContextAccessor contextAccessor*/)
         {
-
+            //_contextAccessor = contextAccessor;
             _context=context;
 
         }
@@ -26,15 +28,19 @@ namespace Personalportfolio.Data.Service
             _context.SaveChanges();
         }
 
+
         public IEnumerable<Awards> GetAll()
         {
+            
             var data = _context.Awards.ToList();
             return data;
         }
 
         public Awards GetById(int id)
         {
+          
             var data = _context.Awards.Where(x => x.Id == id).FirstOrDefault();
+           // string test = _contextAccessor.HttpContext.User.FindFirstValue("userId");
             return data;
         }
 

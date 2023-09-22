@@ -60,7 +60,6 @@ namespace Personalportfolio.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UId")
@@ -340,13 +339,13 @@ namespace Personalportfolio.Migrations
 
             modelBuilder.Entity("Personalportfolio.Models.Education", b =>
                 {
-                    b.HasOne("Personalportfolio.Models.User", "User")
+                    b.HasOne("Personalportfolio.Models.User", "user")
                         .WithMany("Education")
                         .HasForeignKey("UId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Personalportfolio.Models.Experience", b =>

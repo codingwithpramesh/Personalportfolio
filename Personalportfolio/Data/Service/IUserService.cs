@@ -9,7 +9,7 @@ namespace Personalportfolio.Data.Service
 
         User GetById(int id);
         Task<User> AddAsync(User user, IFormFile file);
-        Task<User> Update(User user);
+        Task<User> Update(User user, IFormFile newFile);
 
         void Delete(int id);
 

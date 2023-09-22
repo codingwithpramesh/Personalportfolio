@@ -28,16 +28,21 @@ namespace Personalportfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(SocialMedia social, IFormFile file)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _service.AddAsync(social, file);
-                return RedirectToAction("Index");
+                try
+                {
+                    await _service.AddAsync(social, file);
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
             return View();
         }
 

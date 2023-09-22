@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-block d-lg-none">@Model.FirstName @Model.LastName</span>
@@ -60,7 +62,7 @@
 
                 @foreach (var s in Model.SocialMedia)
                 {
-                    <a class="social-icon"><i src="@s.Icon"></i></a>
+                    <a class="social-icon"><img style="width:50px;" src="@s.Icon"/></a>
                 }
 
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personalportfolio.Data.Service;
 using Personalportfolio.Models;
+using System.Security.Claims;
 
 namespace Personalportfolio.Controllers
 {
@@ -11,34 +12,45 @@ namespace Personalportfolio.Controllers
         private readonly IEducationService _service;
         public EducationController(IEducationService service)
         {
-            _service = service;  
+            _service = service;
         }
         public IActionResult Index()
         {
+
             IEnumerable<Education> data = _service.GetAll();
             return View(data);
         }
+
+
         [HttpGet]
         public IActionResult Create()
         {
-
             return View();
         }
 
         [HttpPost]
-        public  IActionResult Create(Education education)
+        public async Task<IActionResult> CreateAsync(Education education)
         {
-            try
-            {
-                _service.AddAsync(education);
-                return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
+
+            if (ModelState.IsValid)
             {
-                Console.WriteLine(ex.Message);
+                try
+                {
+
+                    await _service.AddAsync(education);
+                    return RedirectToAction("Index");
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            return View();
+
+            return View(education);
         }
 
         [HttpGet]
@@ -51,8 +63,11 @@ namespace Personalportfolio.Controllers
         [HttpPost]
         public IActionResult Edit(Education education)
         {
+
             _service.Update(education);
             return RedirectToAction("Index");
+
+
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -64,8 +79,17 @@ namespace Personalportfolio.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Deleted(int id)
         {
-            _service.Delete(id);
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                _service.Delete(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
 

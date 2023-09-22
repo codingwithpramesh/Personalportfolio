@@ -27,6 +27,8 @@ namespace Personalportfolio.Data.Service
 
         public IEnumerable<Interest> GetAll()
         {
+            // var username = User.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
+           // var username = H.User.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
             var data = _context.Interests.ToList();
             return data;
         }

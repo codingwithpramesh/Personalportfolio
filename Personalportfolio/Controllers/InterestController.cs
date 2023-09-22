@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personalportfolio.Data.Service;
 using Personalportfolio.Models;
+using System.Security.Claims;
 
 namespace Personalportfolio.Controllers
 {
@@ -15,7 +16,8 @@ namespace Personalportfolio.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Interest> data = _service.GetAll();
+            var username = User.FindFirstValue("userId");
+            IEnumerable<Interest> data = _service.GetAll().Where(x => x.UId.ToString() == username).ToList();
             return View(data);
         }
         [HttpGet]
@@ -28,16 +30,20 @@ namespace Personalportfolio.Controllers
         [HttpPost]
         public IActionResult Create(Interest interest)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _service.Add(interest);
-                return RedirectToAction("Index");
+                try
+                {
+                    _service.Add(interest);
+                    return RedirectToAction("Index");
 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+           
             return View();
         }
 

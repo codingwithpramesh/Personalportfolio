@@ -29,16 +29,21 @@ namespace Personalportfolio.Controllers
         [HttpPost]
         public IActionResult Create(Experience experience)
         {
-            try
-            {
-                _Service.Add(experience);
-                return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
+            if (ModelState.IsValid)
             {
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    _Service.Add(experience);
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
+           
             return View();
         }
 

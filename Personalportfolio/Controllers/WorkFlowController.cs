@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personalportfolio.Data.Service;
 using Personalportfolio.Models;
+using System.Security.Claims;
 
 namespace Personalportfolio.Controllers
 {
@@ -17,7 +18,8 @@ namespace Personalportfolio.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<WorkFlow> data = _service.GetAll();
+            var usermail = User.FindFirstValue("userId");
+            IEnumerable<WorkFlow> data = _service.GetAll().Where(x =>x.UId.ToString() == usermail).ToList();
             return View(data);
         }
         [HttpGet]
@@ -28,17 +30,22 @@ namespace Personalportfolio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(WorkFlow workFlow)
+        public async Task<IActionResult> Create(WorkFlow workFlow)
         {
-            try
-            {
-                _service.Add(workFlow);
-                return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
+            if (ModelState.IsValid)
             {
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    _service.Add(workFlow);
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+               
             }
             return View();
         }
@@ -46,15 +53,31 @@ namespace Personalportfolio.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            WorkFlow data = _service.GetById(id);
-            return View(data);
+            if (ModelState.IsValid)
+            {
+                WorkFlow data = _service.GetById(id);
+                return View(data);
+            }
+            else
+            {
+                return View();
+            }
+           
         }
 
         [HttpPost]
         public IActionResult Edit(WorkFlow workFlow)
         {
-            _service.Update(workFlow);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _service.Update(workFlow);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+           
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -66,8 +89,16 @@ namespace Personalportfolio.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Deleted(int id)
         {
-            _service.Delete(id);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _service.Delete(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
 

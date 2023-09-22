@@ -15,9 +15,18 @@ namespace Personalportfolio.Data.Service
 
         public async Task<WorkFlow> Add(WorkFlow workFlow)
         {
-            _context.WorkFlows.Add(workFlow);
-            _context.SaveChanges();
-            return workFlow;
+            try
+            {
+                _context.WorkFlows.Add(workFlow);
+                _context.SaveChanges();
+                return workFlow;
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return null;
+            
         }
 
         public void Delete(int id)

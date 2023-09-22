@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Personalportfolio.Data.Service;
 using Personalportfolio.Models;
+using System.Security.Claims;
 
 namespace Personalportfolio.Controllers
 {
@@ -15,7 +16,8 @@ namespace Personalportfolio.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Tools> data = _service.GetAll();
+            var username = User.FindFirstValue("userId");
+            IEnumerable<Tools> data = _service.GetAll().Where(x =>x.UId.ToString() == username).ToList();
             return View(data);
         }
         [HttpGet]
@@ -28,16 +30,21 @@ namespace Personalportfolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Tools tools, IFormFile file)
         {
-            try
-            {
-               await _service.AddAsync(tools, file);
-                return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
+            if (ModelState.IsValid)
             {
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    await _service.AddAsync(tools, file);
+                    return RedirectToAction("Index");
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
+            
             return View();
         }
 

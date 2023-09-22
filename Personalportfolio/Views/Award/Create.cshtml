@@ -5,7 +5,7 @@
 }
 
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-action="create" method="post" enctype="multipart/form-data">
      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-8 offset-2">
@@ -15,15 +15,12 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UId"> UId</label>
-                <input  asp-for="UId" class="form-control" />
-                <span asp-validation-for="UId"></span>
-            </div>
-            <div class="form-group">
+           
+            <div class="form-group" style="margin-top:20px;">
                 <button type="submit" asp-action="Create" class="btn btn-primary">Create</button>
             </div>
         </div>
     </div>
 
 </form>
+

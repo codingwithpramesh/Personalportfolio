@@ -8,13 +8,15 @@
 </div>
 
 <a asp-action="Create">Create</a>
+
+
 <div class="row">
     <div class="col-md-8 offset-2">
         <table class="table">
             <tr>
                 <td>@Html.DisplayNameFor(Model =>Model.First().Id) </td>
                 <td>@Html.DisplayNameFor(Model =>Model.First().Description)</td>
-                <td>@Html.DisplayNameFor(Model =>Model.First().UId) </td>
+               
                 <td>Actions</td>
             </tr>
 
@@ -23,7 +25,7 @@
                 <tr>
                     <td> @Html.DisplayFor(Model => abc.Id)</td>
                     <td> @Html.DisplayFor(Model => abc.Description)</td>
-                    <td> @Html.DisplayFor(Model => abc.UId)</td>
+                  
 
                     <td> <a asp-action="Edit" asp-route-id="@abc.Id">Edit</a></td>
                     <td> <a asp-action="Delete" asp-route-id="@abc.Id">Delete</a></td>
